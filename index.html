@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Slider</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles.css" type="text/css">
+    <script src="http://code.jquery.com/jquery-2.2.1.js"></script>
+    <script src="swipe/swipe.js" type="text/javascript"></script>
+    <script>
+      $(document).ready(function() {
+        window.mySwipe = new Swipe(document.getElementById('slider'), {
+          startSlide: 0,
+          speed: 400,
+          continuous: true,
+          disableScroll: false,
+          stopPropagation: false,
+          callback: function(index, elem) {},
+          transitionEnd: function(index, elem) {}
+        });
+
+
+        $("#dots li").click(function () {
+          var i = $('#dots li').index(this);
+          $("#dots li").removeClass('active');
+          $(this).addClass('active');
+          window.mySwipe.slide(i,400);
+        });
+
+        $('.next').on('click', function() {
+          var i = window.mySwipe.getPos();
+          var j = i + 1;
+          $("#dots li").removeClass('active');
+          if (j === 5) {
+            j = 0;
+            $('#' + j).addClass('active');
+          } else {
+            $('#' + j).addClass('active');
+          }
+          window.mySwipe.next();
+        });
+	      $('.prev').on('click', function() {
+          var i = window.mySwipe.getPos();
+          var j = i - 1;
+          $("#dots li").removeClass('active');
+          if (j === -1) {
+            j = 4;
+            $('#' + j).addClass('active');
+          } else {
+            $('#' + j).addClass('active');
+          }
+          window.mySwipe.prev();
+        });
+        setInterval(function(){
+          $(".next").trigger('click');
+        },2500);
+      });
+    </script>
+  </head>
+  <body>
+    <div class="header"><h2>jQuery and JavaScript slider</h2></div>
+    <p>Made by <strong>Quan Minh Pham</strong></p>
+    <div id='slider' class='swipe'>
+      <div class='swipe-wrap'>
+        <div><img src="images/20120807 saloon-art.jpg"/></div>
+        <div><img src="images/20120812 teton-triumph.jpg"/></div>
+        <div><img src="images/20120927 lighthouse-small.jpg"/></div>
+        <div><img src="images/20120903 night-arch-small.jpg"/></div>
+        <div><img src="images/20120923 pittsburgh-pano.jpg"/></div>
+      </div>
+      <span class="nav prev">Prev</span>
+		  <span class="nav next">Next</span>
+      <div id="slider-nav-container">
+        <div id="slider-nav">
+          <ul id="dots">
+            <li id="0" class="active"></li>
+            <li id="1"></li>
+            <li id="2"></li>
+            <li id="3"></li>
+            <li id="4"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
